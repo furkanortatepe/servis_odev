@@ -8,6 +8,8 @@ class AlanIstemci(Node):
     def __init__(self):
         super().__init__('alan_istemci')
         self.client = self.create_client(RectangleArea, 'rectangle_area')
+
+        # Sunucu ayaga kalkana kadar bekle
         while not self.client.wait_for_service(timeout_sec=1.0):
             self.get_logger().info('Servis bekleniyor...')
 
@@ -29,7 +31,7 @@ def main(args=None):
         width = float(sys.argv[1])
         height = float(sys.argv[2])
     except ValueError:
-        print('Hata: width ve height sayisal deger olmalidir.')
+        print('Hata: width ve height icin sayisal deger girin.')
         sys.exit(1)
 
     rclpy.init(args=args)
@@ -43,7 +45,7 @@ def main(args=None):
             )
         else:
             node.get_logger().warn(
-                f'Istek reddedildi: negatif deger girilemez (width={width}, height={height}, success=False)'
+                'Istek reddedildi: negatif deger girilemez (success=False)'
             )
     finally:
         node.destroy_node()

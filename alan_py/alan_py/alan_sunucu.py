@@ -14,19 +14,19 @@ class AlanSunucu(Node):
         self.get_logger().info('RectangleArea servisi hazir, istek bekleniyor...')
 
     def hesapla_callback(self, request, response):
-        # Negatif kenar uzunluklarini reddet (bonus)
+        # Bonus: negatif kenar uzunlugu gelirse reddet
         if request.width < 0.0 or request.height < 0.0:
             response.area = 0.0
             response.success = False
             self.get_logger().warn(
-                f'Gecersiz istek (negatif deger): width={request.width}, height={request.height}'
+                f'Negatif deger reddedildi: width={request.width}, height={request.height}'
             )
             return response
 
         response.area = request.width * request.height
         response.success = True
         self.get_logger().info(
-            f'Istek: width={request.width}, height={request.height} -> area={response.area}'
+            f'Hesaplandi: {request.width} x {request.height} -> alan = {response.area}'
         )
         return response
 
